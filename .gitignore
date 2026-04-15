@@ -2,3 +2,8 @@ server
 *.db
 *.db-shm
 *.db-wal
+tailwindcss
+internal/web/static/css/style.css
+.env
+*.log
+tmp/
