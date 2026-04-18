@@ -13,7 +13,8 @@
         <input type="search" placeholder="Search..." aria-label="Search jobs"
             class="px-3 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500" />
         <div class="flex justify-end">
-            <button onclick="document.getElementById('newJobDialog').showModal()"
+            <button type="button" aria-haspopup="dialog" aria-controls="newJobDialog"
+                onclick="document.getElementById('newJobDialog').showModal()"
                 class="px-4 py-2 bg-emerald-500 text-white rounded cursor-pointer hover:bg-emerald-600">New Job</button>
         </div>
     </div>
