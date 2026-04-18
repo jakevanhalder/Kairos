@@ -21,7 +21,12 @@ var funcMap = template.FuncMap{
 }
 
 func render(w http.ResponseWriter, page string, data PageData) {
-	tmpl, err := template.New("").Funcs(funcMap).ParseFiles(
+	tmpl, err := template.New("").Funcs(funcMap).ParseGlob("internal/web/templates/partials/*.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl, err = tmpl.ParseFiles(
 		"internal/web/templates/base.html",
 		"internal/web/templates/"+page+".html",
 	)
