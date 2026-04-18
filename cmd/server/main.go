@@ -7,11 +7,21 @@ import (
 )
 
 type PageData struct {
-	ActivePage string
+	ActivePage   string
+	FilterStatus string
+}
+
+var funcMap = template.FuncMap{
+	"filterClass": func(filterStatus, status string) string {
+		if filterStatus == status {
+			return "bg-emerald-500 text-white"
+		}
+		return "text-gray-600 hover:bg-gray-200"
+	},
 }
 
 func render(w http.ResponseWriter, page string, data PageData) {
-	tmpl, err := template.ParseFiles(
+	tmpl, err := template.New("").Funcs(funcMap).ParseFiles(
 		"internal/web/templates/base.html",
 		"internal/web/templates/"+page+".html",
 	)
@@ -30,7 +40,8 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("internal/web/static"))))
 
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
-		render(w, "index", PageData{ActivePage: "dashboard"})
+		status := r.URL.Query().Get("status")
+		render(w, "index", PageData{ActivePage: "dashboard", FilterStatus: status})
 	})
 	mux.HandleFunc("GET /jobs", func(w http.ResponseWriter, r *http.Request) {
 		render(w, "jobs", PageData{ActivePage: "jobs"})
