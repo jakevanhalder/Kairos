@@ -12,12 +12,6 @@ type PageData struct {
 }
 
 var funcMap = template.FuncMap{
-	"navClass": func(activePage, page string) string {
-		if activePage == page {
-			return "bg-gray-950/50 text-white"
-		}
-		return "text-gray-300 hover:bg-white/5 hover:text-white"
-	},
 	"filterClass": func(filterStatus, status string) string {
 		if filterStatus == status {
 			return "bg-emerald-500 text-white"
